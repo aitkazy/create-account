@@ -32,24 +32,65 @@ const CreateAccount = () => {
 
 class App extends Component {
   state = {
+    isLoading: false,
+    isLoaded: false,
     isLogged: false,
     login: "demo",
     password: "demo",
     error: ""
   };
 
-  handleLogin = (formLogin, formPassword) => {
+  simulateLoginRequest = (formLogin, formPassword) => {
     const { login, password } = this.state;
-    const isLogged = login === formLogin && formPassword === password;
-    this.setState({ isLogged });
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const isLogged = login === formLogin && formPassword === password;
+        if (isLogged) {
+          resolve({ status: "OK" });
+        } else {
+          reject(new Error("Неправильный логин или пароль"));
+        }
+      }, 1000);
+    });
+  };
+
+  handleLogin = (login, password) => {
+    this.setState({
+      isLoading: true,
+      isLoaded: false,
+      isLogged: false,
+      error: ""
+    });
+    this.simulateLoginRequest(login, password)
+      .then(data => {
+        this.setState({
+          isLogged: true,
+          isLoaded: true,
+          isLoading: false
+        });
+      })
+      .catch(error =>
+        this.setState({
+          isLoaded: true,
+          isLoading: false,
+          isLogged: false,
+          error: error.message
+        })
+      );
   };
 
   render() {
-    const { isLogged } = this.state;
+    const { isLogged, isLoading, isLoaded, error } = this.state;
     return (
       <div>
         {isLogged && <CreateAccount />}
-        {!isLogged && <Login handleLogin={this.handleLogin} />}
+        {!isLogged && (
+          <Login
+            isLoading={isLoading}
+            error={error}
+            handleSubmit={this.handleLogin}
+          />
+        )}
       </div>
     );
   }
