@@ -23,11 +23,7 @@ const Test = () => {
 };
 
 const CreateAccount = () => {
-  return (
-    <div className="vw-100 vh-100 d-flex d-flex-row justify-content-center align-items-center">
-      <Test />
-    </div>
-  );
+  return <Test />;
 };
 
 class App extends Component {
@@ -82,7 +78,7 @@ class App extends Component {
   render() {
     const { isLogged, isLoading, isLoaded, error } = this.state;
     return (
-      <div>
+      <div className="vw-100 vh-100 d-flex d-flex-row justify-content-center align-items-center">
         {isLogged && <CreateAccount />}
         {!isLogged && (
           <Login

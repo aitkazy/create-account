@@ -22,11 +22,14 @@ export class Login extends Component {
     const { login, password } = this.state;
     const { isLoading, error } = this.props;
     return (
-      <div className="vw-100 vh-100 d-flex d-flex-row justify-content-center align-items-center">
+      <Fragment>
         <div className="p-5 bg-primary rounded w-25">
+          <p className="h1 text-light">Email2Sms</p>
           <form onSubmit={this.onSubmit}>
             <div className="form-group">
-              <label htmlFor="login">Логин</label>
+              <label htmlFor="login" className="text-light">
+                Логин
+              </label>
               <input
                 value={login}
                 onChange={this.handleInputChange("login")}
@@ -37,7 +40,9 @@ export class Login extends Component {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="password">Пароль</label>
+              <label htmlFor="password" className="text-light">
+                Пароль
+              </label>
               <input
                 value={password}
                 onChange={this.handleInputChange("password")}
@@ -61,12 +66,12 @@ export class Login extends Component {
             </button>
           </form>
           {error && (
-            <div class="alert alert-warning mt-3" role="alert">
+            <div className="alert alert-warning mt-3" role="alert">
               {error}
             </div>
           )}
         </div>
-      </div>
+      </Fragment>
     );
   }
 }
