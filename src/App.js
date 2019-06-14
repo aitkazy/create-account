@@ -27,35 +27,42 @@ class App extends Component {
   };
 
   handleLogin = (login, password) => {
-    this.setState({
-      isLoading: true,
-      isLoaded: false,
-      isLogged: false,
-      error: ""
-    });
-    this.simulateLoginRequest(login, password)
-      .then(data => {
-        this.setState({
-          isLogged: true,
-          isLoaded: true,
-          isLoading: false
-        });
-      })
-      .catch(error =>
-        this.setState({
-          isLoaded: true,
-          isLoading: false,
-          isLogged: false,
-          error: error.message
-        })
-      );
+    this.setState(
+      {
+        isLoading: true,
+        isLoaded: false,
+        isLogged: false,
+        error: ""
+      },
+      () =>
+        this.simulateLoginRequest(login, password)
+          .then(data => {
+            this.setState({
+              isLogged: true,
+              isLoaded: true,
+              isLoading: false
+            });
+          })
+          .catch(error =>
+            this.setState({
+              isLoaded: true,
+              isLoading: false,
+              isLogged: false,
+              error: error.message
+            })
+          )
+    );
   };
 
   render() {
     const { isLogged, isLoading, isLoaded, error } = this.state;
     return (
       <div className="vw-100 vh-100 d-flex d-flex-row justify-content-center align-items-center">
-        {isLogged && <CreateAccount />}
+        {isLogged && (
+          <CreateAccount
+            handleSubmit={pn => console.log("submitting with pn", pn)}
+          />
+        )}
         {!isLogged && (
           <Login
             isLoading={isLoading}
