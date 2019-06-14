@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 export class CreateAccount extends Component {
-  state = { phoneNumber: "", validationError: "" };
+  state = { phoneNumber: "77774836984", validationError: "" };
 
   handlePhoneNumberChange = e => {
     const phoneNumber = e.target.value.replace(/[^\d]/g, "");
@@ -44,12 +44,12 @@ export class CreateAccount extends Component {
               onFocus={() => this.setState({ validationError: "" })}
             />
           </div>
-          <button type="submit" class="btn btn-dark btn-block">
-            Submit
+          <button type="submit" className="btn btn-dark btn-block">
+            Создать аккаунт
           </button>
         </form>
         {validationError && (
-          <div class="alert alert-warning mt-3" role="alert">
+          <div className="alert alert-warning mt-3" role="alert">
             {validationError}
           </div>
         )}

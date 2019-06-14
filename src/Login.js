@@ -2,8 +2,8 @@ import React, { Component, Fragment } from "react";
 
 export class Login extends Component {
   state = {
-    login: "",
-    password: "",
+    login: "demo",
+    password: "demo",
     error: ""
   };
 
@@ -56,7 +56,7 @@ export class Login extends Component {
               {isLoading && (
                 <Fragment>
                   <span
-                    class="spinner-border spinner-border-sm"
+                    className="spinner-border spinner-border-sm"
                     role="status"
                     aria-hidden="true"
                   />
