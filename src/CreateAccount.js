@@ -27,7 +27,7 @@ export class CreateAccount extends Component {
   };
 
   render() {
-    const { phoneNumber } = this.state;
+    const { phoneNumber, validationError } = this.state;
     return (
       <div className="p-5 bg-primary rounded w-25 text-light">
         <form onSubmit={this.onSubmit}>
@@ -41,12 +41,18 @@ export class CreateAccount extends Component {
               placeholder="Введите номер телефона"
               value={phoneNumber}
               onChange={this.handlePhoneNumberChange}
+              onFocus={() => this.setState({ validationError: "" })}
             />
           </div>
           <button type="submit" class="btn btn-dark btn-block">
             Submit
           </button>
         </form>
+        {validationError && (
+          <div class="alert alert-warning mt-3" role="alert">
+            {validationError}
+          </div>
+        )}
       </div>
     );
   }
