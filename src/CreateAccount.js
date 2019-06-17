@@ -85,7 +85,7 @@ export class CreateAccount extends Component {
                   role="status"
                   aria-hidden="true"
                 />
-                Создание аккаунта
+                {"   Создание аккаунта"}
               </Fragment>
             )}
           </button>

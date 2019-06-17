@@ -81,7 +81,7 @@ class Login extends Component {
                     role="status"
                     aria-hidden="true"
                   />
-                  Загрузка
+                  {"   Загрузка"}
                 </Fragment>
               )}
             </button>
