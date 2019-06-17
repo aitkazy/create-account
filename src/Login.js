@@ -5,34 +5,42 @@ class Login extends Component {
     login: "demo",
     password: "demo",
     error: false,
-    requestingLogin: false,
-    isLogged: false
-  };
-
-  componentDidUpdate = (prevProps, prevState) => {
-    const { isLoggedRef } = this.props;
-    const { isLogged } = this.state;
-    if (isLogged !== prevState.isLogged) {
-      isLoggedRef(isLogged);
-    }
+    requestingLogin: false
   };
 
   handleInputChange = field => e => this.setState({ [field]: e.target.value });
 
-  onSubmit = e => {
-    const { handleSubmit } = this.props;
+  simulateLoginRequest = () => {
     const { login, password } = this.state;
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const isLogged = login === "demo" && password === "demo";
+        if (isLogged) {
+          resolve({ status: "OK" });
+        } else {
+          reject(new Error("Неправильный логин или пароль"));
+        }
+      }, 1000);
+    });
+  };
+
+  onSubmit = e => {
     e.preventDefault();
-    this.setState(
-      { requestingLogin: true, error: false, isLogged: false },
-      () =>
-        handleSubmit(login, password)
-          .then(data =>
-            this.setState({ requestingLogin: false, isLogged: true })
-          )
-          .catch(error =>
-            this.setState({ requestingLogin: false, isLogged: false, error })
-          )
+    this.setState({ requestingLogin: true, error: false }, () =>
+      this.simulateLoginRequest()
+        .catch(error => {
+          console.log("error while sign in", error);
+          throw new Error(
+            "Ошибка авторизации. Обратитесь к администратору системы."
+          );
+        })
+        .then(() => {
+          this.setState({ requestingLogin: false });
+          this.props.callback(true);
+        })
+        .catch(error =>
+          this.setState({ requestingLogin: false, isLogged: false, error })
+        )
     );
   };
 

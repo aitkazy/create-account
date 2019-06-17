@@ -14,32 +14,41 @@ export class CreateAccount extends Component {
     this.setState({ phoneNumber });
   };
 
+  //   onSubmit = e => {
+  //     const { handleSubmit } = this.props;
+  //     const { phoneNumber } = this.state;
+  //     e.preventDefault();
+  //     if (this.validatePhoneNumber(phoneNumber)) return;
+  //     this.setState({ isCreatingAccount: true, isAccountCreated: false }, () => {
+  //       handleSubmit(phoneNumber)
+  //         .catch(responseError => {
+  //           console.log("Response Error", responseError);
+  //           throw new Error(
+  //             "Ошибка создания аккаунта. Обратитесь к администратору системы."
+  //           );
+  //         })
+  //         .then(data => {
+  //           this.setState({
+  //             isCreatingAccount: false,
+  //             isCreateAccReqFinished: true
+  //           });
+  //         })
+  //         .catch(error => {
+  //           this.setState({
+  //             error: error.message,
+  //             isCreatingAccount: false,
+  //             isCreateAccReqFinished: false
+  //           });
+  //         });
+  //     });
+  //   };
+
   onSubmit = e => {
-    const { handleSubmit } = this.props;
-    const { phoneNumber } = this.state;
     e.preventDefault();
-    if (this.validatePhoneNumber(phoneNumber)) return;
-    this.setState({ isCreatingAccount: true, isAccountCreated: false }, () => {
-      handleSubmit(phoneNumber)
-        .catch(responseError => {
-          console.log("Response Error", responseError);
-          throw new Error(
-            "Ошибка создания аккаунта. Обратитесь к администратору системы."
-          );
-        })
-        .then(data => {
-          this.setState({
-            isCreatingAccount: false,
-            isCreateAccReqFinished: true
-          });
-        })
-        .catch(error => {
-          this.setState({
-            error: error.message,
-            isCreatingAccount: false,
-            isCreateAccReqFinished: false
-          });
-        });
+    console.log(this.props);
+    this.props.history.push({
+      pathname: "/accountInfo",
+      state: { response: { someData: "someData" } }
     });
   };
 
