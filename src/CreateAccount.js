@@ -4,9 +4,7 @@ export class CreateAccount extends Component {
   state = {
     phoneNumber: "77774836984",
     error: "",
-    isCreatingAccount: false,
-    isCreateAccReqFinished: false,
-    requestMessage: {}
+    isCreatingAccount: false
   };
 
   handlePhoneNumberChange = e => {
@@ -14,45 +12,59 @@ export class CreateAccount extends Component {
     this.setState({ phoneNumber });
   };
 
-  //   onSubmit = e => {
-  //     const { handleSubmit } = this.props;
-  //     const { phoneNumber } = this.state;
-  //     e.preventDefault();
-  //     if (this.validatePhoneNumber(phoneNumber)) return;
-  //     this.setState({ isCreatingAccount: true, isAccountCreated: false }, () => {
-  //       handleSubmit(phoneNumber)
-  //         .catch(responseError => {
-  //           console.log("Response Error", responseError);
-  //           throw new Error(
-  //             "Ошибка создания аккаунта. Обратитесь к администратору системы."
-  //           );
-  //         })
-  //         .then(data => {
-  //           this.setState({
-  //             isCreatingAccount: false,
-  //             isCreateAccReqFinished: true
-  //           });
-  //         })
-  //         .catch(error => {
-  //           this.setState({
-  //             error: error.message,
-  //             isCreatingAccount: false,
-  //             isCreateAccReqFinished: false
-  //           });
-  //         });
-  //     });
-  //   };
-
-  onSubmit = e => {
-    e.preventDefault();
-    console.log(this.props);
-    this.props.history.push({
-      pathname: "/accountInfo",
-      state: { response: { someData: "someData" } }
+  simulateCreateAccountRequest = () => {
+    // const { phoneNumber } = this.state;
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          result: "error",
+          message:
+            "Failed to save object. Another object with the same name already exists in this domain."
+        });
+        // resolve({
+        //   result: "ok",
+        //   message: "Account created: 77774836986@mail2.bctu.tech"
+        // });
+        // reject();
+      }, 1000);
     });
   };
 
-  validatePhoneNumber = phoneNumber => {
+  onSubmit = e => {
+    e.preventDefault();
+    if (this.validatePhoneNumber()) return;
+    this.setState({ isCreatingAccount: true }, () => {
+      this.simulateCreateAccountRequest()
+        .catch(responseError => {
+          console.log("Response Error", responseError);
+          throw new Error(
+            "Ошибка создания аккаунта. Обратитесь к администратору системы."
+          );
+        })
+        .then(data => {
+          this.setState(
+            {
+              isCreatingAccount: false
+            },
+            () =>
+              this.props.history.push({
+                pathname: "/accountInfo",
+                state: { response: data }
+              })
+          );
+        })
+        .catch(error => {
+          this.setState({
+            error: error.message,
+            isCreatingAccount: false,
+            isCreateAccReqFinished: false
+          });
+        });
+    });
+  };
+
+  validatePhoneNumber = () => {
+    const { phoneNumber } = this.state;
     const lengthError = phoneNumber.length !== 11;
     if (lengthError) {
       this.setState({

@@ -2,12 +2,7 @@ import React, { Component } from "react";
 import Login from "./Login";
 import CreateAccount from "./CreateAccount";
 import RequestScreen from "./RequestScreen";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Redirect
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 class App extends Component {
   state = {
