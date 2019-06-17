@@ -1,22 +1,23 @@
 import React, { Component } from "react";
 import Login from "./Login";
 import CreateAccount from "./CreateAccount";
-import axios from "axios";
 
 class App extends Component {
   state = {
-    isLoading: false,
     isLogged: false,
-    login: "demo",
-    password: "demo",
-    error: ""
+    isAccountCreated: false,
+    userLogin: "demo",
+    userPassword: "demo"
   };
 
+  handleLoggedRef = isLogged => this.setState({ isLogged });
+
   simulateLoginRequest = (formLogin, formPassword) => {
-    const { login, password } = this.state;
+    const { userLogin, userPassword } = this.state;
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        const isLogged = login === formLogin && formPassword === password;
+        const isLogged =
+          userLogin === formLogin && formPassword === userPassword;
         if (isLogged) {
           resolve({ status: "OK" });
         } else {
@@ -26,86 +27,34 @@ class App extends Component {
     });
   };
 
-  handleLogin = (login, password) => {
-    this.setState(
-      {
-        isLoading: true,
-        isLogged: false,
-        error: ""
-      },
-      () =>
-        this.simulateLoginRequest(login, password)
-          .then(data => {
-            this.setState({
-              isLogged: true,
-              isLoading: false
-            });
-          })
-          .catch(error =>
-            this.setState({
-              isLoading: false,
-              isLogged: false,
-              error: error.message
-            })
-          )
-    );
-  };
-
-  createAccountRequest = phoneNumber => {
-    const formData = new FormData();
-    formData.set("phoneNumber", phoneNumber);
-    // return axios({
-    //   method: "post",
-    //   url: "http://mail2.bctu.tech/api/createaccount",
-    //   auth: {
-    //     username: "DteApiUser",
-    //     password: "hVta7B#"
-    //   },
-    //   data: {
-    //     // phoneNumber: formData
-    //     phoneNumber
-    //   }
-    // });
-    return axios({
-      url: "http://mail2.bctu.tech/api/createaccount",
-      method: "post",
-      transformRequest: obj => {
-        let str = [];
-        for (var prop in obj)
-          if (obj.hasOwnProperty(prop)) {
-            str.push(
-              encodeURIComponent(prop) + "=" + encodeURIComponent(obj[prop])
-            );
-          }
-        return str.join("&");
-      },
-      auth: {
-        username: "DteApiUser",
-        password: "hVta7B#"
-      },
-      data: formData,
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
-      }
+  simulateCreateAccountRequest = () => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          result: "ok",
+          message: "Account created: 77774836986@mail2.bctu.tech"
+        });
+        // reject({
+        //   result: "error",
+        //   message:
+        //     "Failed to save object. Another object with the same name already exists in this domain."
+        // });
+      }, 2000);
     });
   };
 
-  handleCreateAccount = phone => {
-    this.createAccountRequest(phone)
-      .then(data => console.log("success ca req", data))
-      .catch(error => console.log("failed ca req", error));
-  };
+  handleCreateAccountRef = isAccountCreated =>
+    this.setState({ isAccountCreated });
 
   render() {
-    const { isLogged, isLoading, error } = this.state;
+    const { isLogged, isAccountCreated } = this.state;
     return (
       <div className="vw-100 vh-100 d-flex d-flex-row justify-content-center align-items-center">
         {isLogged && <CreateAccount handleSubmit={this.handleCreateAccount} />}
         {!isLogged && (
           <Login
-            isLoading={isLoading}
-            error={error}
-            handleSubmit={this.handleLogin}
+            handleSubmit={this.simulateLoginRequest}
+            isLoggedRef={this.handleLoggedRef}
           />
         )}
       </div>

@@ -1,13 +1,21 @@
 import React, { Component, Fragment } from "react";
 
-export class Login extends Component {
+class Login extends Component {
   state = {
     login: "demo",
     password: "demo",
-    error: ""
+    error: false,
+    requestingLogin: false,
+    isLogged: false
   };
 
-  validate = () => {};
+  componentDidUpdate = (prevProps, prevState) => {
+    const { isLoggedRef } = this.props;
+    const { isLogged } = this.state;
+    if (isLogged !== prevState.isLogged) {
+      isLoggedRef(isLogged);
+    }
+  };
 
   handleInputChange = field => e => this.setState({ [field]: e.target.value });
 
@@ -15,12 +23,21 @@ export class Login extends Component {
     const { handleSubmit } = this.props;
     const { login, password } = this.state;
     e.preventDefault();
-    handleSubmit(login, password);
+    this.setState(
+      { requestingLogin: true, error: false, isLogged: false },
+      () =>
+        handleSubmit(login, password)
+          .then(data =>
+            this.setState({ requestingLogin: false, isLogged: true })
+          )
+          .catch(error =>
+            this.setState({ requestingLogin: false, isLogged: false, error })
+          )
+    );
   };
 
   render() {
-    const { login, password } = this.state;
-    const { isLoading, error } = this.props;
+    const { login, password, requestingLogin, error } = this.state;
     return (
       <Fragment>
         <div className="p-5 bg-primary rounded w-25">
@@ -51,9 +68,13 @@ export class Login extends Component {
                 id="password"
               />
             </div>
-            <button type="submit" className="btn btn-dark">
-              {!isLoading && "Войти"}
-              {isLoading && (
+            <button
+              disabled={requestingLogin}
+              type="submit"
+              className="btn btn-dark"
+            >
+              {!requestingLogin && "Войти"}
+              {requestingLogin && (
                 <Fragment>
                   <span
                     className="spinner-border spinner-border-sm"
@@ -67,7 +88,7 @@ export class Login extends Component {
           </form>
           {error && (
             <div className="alert alert-warning mt-3" role="alert">
-              {error}
+              {error.message}
             </div>
           )}
         </div>
