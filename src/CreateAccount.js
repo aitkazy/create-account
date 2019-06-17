@@ -16,16 +16,16 @@ export class CreateAccount extends Component {
     // const { phoneNumber } = this.state;
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve({
-          result: "error",
-          message:
-            "Failed to save object. Another object with the same name already exists in this domain."
-        });
+        // resolve({
+        //   result: "error",
+        //   message:
+        //     "Failed to save object. Another object with the same name already exists in this domain."
+        // });
         // resolve({
         //   result: "ok",
         //   message: "Account created: 77774836986@mail2.bctu.tech"
         // });
-        // reject();
+        reject();
       }, 1000);
     });
   };
