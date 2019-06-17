@@ -30,15 +30,16 @@ class App extends Component {
   simulateCreateAccountRequest = () => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve({
-          result: "ok",
-          message: "Account created: 77774836986@mail2.bctu.tech"
-        });
-        // reject({
+        // resolve({
+        //   result: "ok",
+        //   message: "Account created: 77774836986@mail2.bctu.tech"
+        // });
+        // resolve({
         //   result: "error",
         //   message:
         //     "Failed to save object. Another object with the same name already exists in this domain."
         // });
+        reject();
       }, 2000);
     });
   };
@@ -50,7 +51,9 @@ class App extends Component {
     const { isLogged, isAccountCreated } = this.state;
     return (
       <div className="vw-100 vh-100 d-flex d-flex-row justify-content-center align-items-center">
-        {isLogged && <CreateAccount handleSubmit={this.handleCreateAccount} />}
+        {isLogged && (
+          <CreateAccount handleSubmit={this.simulateCreateAccountRequest} />
+        )}
         {!isLogged && (
           <Login
             handleSubmit={this.simulateLoginRequest}
