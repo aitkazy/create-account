@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCopy } from "@fortawesome/free-solid-svg-icons";
 
 class CopyToClipboard extends Component {
   copyText = () => {
@@ -28,11 +30,12 @@ class CopyToClipboard extends Component {
           />
           <div className="input-group-append">
             <button
+              title="Копировать email"
               onClick={this.copyText}
               className="btn btn-dark"
               type="button"
             >
-              Копировать
+              <FontAwesomeIcon icon={faCopy} />
             </button>
           </div>
         </div>
