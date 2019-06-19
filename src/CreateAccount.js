@@ -23,7 +23,7 @@ export class CreateAccount extends Component {
         // });
         resolve({
           result: "ok",
-          message: "Account created: 77774836986@mail2.bctu.tech"
+          message: "Account created: justForTest@test.com"
         });
         // reject();
       }, 1000);
@@ -122,3 +122,5 @@ export class CreateAccount extends Component {
 }
 
 export default CreateAccount;
+
+// 77774836986@mail2.bctu.tech
