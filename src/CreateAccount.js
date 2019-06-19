@@ -16,15 +16,15 @@ export class CreateAccount extends Component {
     // const { phoneNumber } = this.state;
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve({
-          result: "error",
-          message:
-            "Failed to save object. Another object with the same name already exists in this domain."
-        });
         // resolve({
-        //   result: "ok",
-        //   message: "Account created: 77774836986@mail2.bctu.tech"
+        //   result: "error",
+        //   message:
+        //     "Failed to save object. Another object with the same name already exists in this domain."
         // });
+        resolve({
+          result: "ok",
+          message: "Account created: 77774836986@mail2.bctu.tech"
+        });
         // reject();
       }, 1000);
     });
@@ -78,7 +78,7 @@ export class CreateAccount extends Component {
   render() {
     const { phoneNumber, error, isCreatingAccount } = this.state;
     return (
-      <div className="p-5 bg-primary rounded w-25 text-light">
+      <div className="p-5 bg-primary rounded text-light">
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label htmlFor="phoneNumber">Номер телефона</label>

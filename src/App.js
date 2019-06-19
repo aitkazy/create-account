@@ -15,16 +15,18 @@ class App extends Component {
     const { isLogged } = this.state;
     return (
       <Router>
-        <div className="vw-100 vh-100 d-flex d-flex-row justify-content-center align-items-center">
-          <Route exact path="/" component={CreateAccount} />
-          <Route path="/accountInfo" component={RequestScreen} />
-          <Route
-            path="/login"
-            render={props => (
-              <Login {...props} callback={this.handleLoggingIn} />
-            )}
-          />
-          {isLogged ? <Redirect to="/" /> : <Redirect to="/login" />}
+        <div className="vw-100 vh-100 d-flex justify-content-center align-items-center">
+          <div style={{ width: "100%", maxWidth: 500, margin: "0 1em" }}>
+            <Route exact path="/" component={CreateAccount} />
+            <Route path="/accountInfo" component={RequestScreen} />
+            <Route
+              path="/login"
+              render={props => (
+                <Login {...props} callback={this.handleLoggingIn} />
+              )}
+            />
+            {isLogged ? <Redirect to="/" /> : <Redirect to="/login" />}
+          </div>
         </div>
       </Router>
     );

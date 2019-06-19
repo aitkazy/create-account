@@ -5,7 +5,7 @@ const RequestScreen = props => {
   const goTo = () => props.history.push("/");
 
   return (
-    <div className="p-5 bg-primary text-light rounded w-25">
+    <div className="p-5 bg-primary text-light rounded">
       <p className="h2">{data.result}</p>
       <p className="h5">{data.message}</p>
       <br />
