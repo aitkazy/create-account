@@ -3,7 +3,7 @@ import request from "./tools/request";
 
 export class CreateAccount extends Component {
   state = {
-    phoneNumber: "77774836984",
+    phoneNumber: "",
     error: "",
     isCreatingAccount: false
   };

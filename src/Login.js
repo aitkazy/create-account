@@ -2,8 +2,8 @@ import React, { Component, Fragment } from "react";
 
 class Login extends Component {
   state = {
-    login: "demo",
-    password: "demo",
+    login: "",
+    password: "",
     error: false,
     requestingLogin: false
   };
