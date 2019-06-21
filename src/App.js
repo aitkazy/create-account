@@ -16,7 +16,14 @@ class App extends Component {
     return (
       <Router>
         <div className="vw-100 vh-100 d-flex justify-content-center align-items-center">
-          <div style={{ width: "100%", maxWidth: 500, margin: "0 1em" }}>
+          <div
+            style={{
+              width: "100%",
+              maxWidth: 500,
+              minWidth: 300,
+              padding: "0 1em"
+            }}
+          >
             <Route exact path="/" component={CreateAccount} />
             <Route path="/accountInfo" component={RequestScreen} />
             <Route

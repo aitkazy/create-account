@@ -23,7 +23,7 @@ export class CreateAccount extends Component {
         // });
         resolve({
           result: "ok",
-          message: "Account created: justForTest@test.com"
+          message: "Account created: yerassyl@test.com"
         });
         // reject();
       }, 1000);
