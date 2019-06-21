@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import request from "./tools/request";
 
 export class CreateAccount extends Component {
   state = {
@@ -12,36 +13,23 @@ export class CreateAccount extends Component {
     this.setState({ phoneNumber });
   };
 
-  simulateCreateAccountRequest = () => {
-    // const { phoneNumber } = this.state;
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        // resolve({
-        //   result: "error",
-        //   message:
-        //     "Failed to save object. Another object with the same name already exists in this domain."
-        // });
-        resolve({
-          result: "ok",
-          message: "Account created: yerassyl@test.com"
-        });
-        // reject();
-      }, 1000);
-    });
+  handleCreateAccountRequest = () => {
+    const { phoneNumber } = this.state;
+    return request.createAccount(phoneNumber);
   };
 
   onSubmit = e => {
     e.preventDefault();
     if (this.validatePhoneNumber()) return;
     this.setState({ isCreatingAccount: true }, () => {
-      this.simulateCreateAccountRequest()
+      this.handleCreateAccountRequest()
         .catch(responseError => {
           console.log("Response Error", responseError);
           throw new Error(
             "Ошибка создания аккаунта. Обратитесь к администратору системы."
           );
         })
-        .then(data => {
+        .then(response => {
           this.setState(
             {
               isCreatingAccount: false
@@ -49,7 +37,7 @@ export class CreateAccount extends Component {
             () =>
               this.props.history.push({
                 pathname: "/accountInfo",
-                state: { response: data }
+                state: { response: response.data }
               })
           );
         })
